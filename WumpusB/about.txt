@@ -1,0 +1,18 @@
+		Welcome to the dangerous world of dragon hunting!
+
+	You are about to enter a cave filled with all sorts of encounters,
+	on a heroic quest to slay the dragon that torments these lands. 
+
+	Many adventurers have tried, and none have succeeded. But from their 
+	bravery, we have gathered intelligence about what looms inside these 
+	dank caverns of despair...
+
+	You may encounter the following obstacles:
+    - Wyvern, an exceptionally territorial breed of dragon. 
+	      Should you wander into a colony, you may find 
+	      yourself further than you started...
+    - The Abyss, a cavity of immeasurable depth. These caves are 
+	      impossible to escape, but can be avoided with caution. 
+	      Should you fall in, you will never return.
+    - Dragon, the meanest of all foes. Kill it to win!
+

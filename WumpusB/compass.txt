@@ -1,0 +1,10 @@
+				    [N]
+				     |
+				[W]--+--[E]
+				     |
+				    [S]
+
+				  Keybinds:
+	[N] Move North	[S] Move South	[W] Move West	[E] Move East
+
+		[M] Map	       [I] Information	     [Q] Quit

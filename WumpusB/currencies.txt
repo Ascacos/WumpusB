@@ -1,0 +1,5 @@
+	Stamina:			Arrows:     			Coins:
+Each time you move, you use 	Required to kill the Dragon.	Can be found in treasure
+1 stamina. If you use up all	If you run out of arrows, you	throughout the caves.
+your stamina, you will be 	are unable to complete your	Use it to buy cool things!
+forced to restart!		quest!
