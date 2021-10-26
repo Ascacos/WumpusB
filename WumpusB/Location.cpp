@@ -22,6 +22,15 @@ Location::Location(string name, string desc, string exits) {
 	hazard = nullptr;
 	containsHazard = false;
 }
+
+Location::Location(string name, string desc, string exits, int id) {
+	locID = id;
+	locName = name;
+	locDesc = desc;
+	locExits = exits;
+	hazard = nullptr;
+	containsHazard = false;
+}
 Location::~Location() { }
 
 //accessors
@@ -30,6 +39,7 @@ string Location::getName() { return locName; }
 string Location::getExits() { return locExits; }
 Hazard* Location::getHazard() { return hazard; }
 bool Location::hasHazard() { return containsHazard; }
+int Location::getID() { return locID; }
 //mutators
 void Location::setDescription(string desc) { locDesc = desc; }
 void Location::setName(string name) { locName = name; }
@@ -37,9 +47,20 @@ void Location::setExits(string exits) { locExits = exits; }
 void Location::putHazard(Hazard* _hazard) {
 	containsHazard = true;
 	hazard = _hazard;
-
 }
 
+void Location::killHazard() {
+	if (hasHazard()) {
+		containsHazard = false;
+		delete hazard;
+		hazard = nullptr;
+
+	}
+	else {
+		cout << "There's no hazard here..." << endl;
+	}
+
+}
 //methods
 string Location::getLocationDetails() {
 	stringstream locationDetails;

@@ -42,6 +42,8 @@ void Player::setStamina(int amount) { stamina = amount; }
 void Player::setName(string name) { playerName = name; }
 void Player::setLocation(Location loc) { playerLoc = loc; }
 
+void Player::setArrows(int amount) { arrows = amount; }
+
 int Player::getStamina() { return stamina; }
 int Player::getArrows() { return arrows; }
 //methods

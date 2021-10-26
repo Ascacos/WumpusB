@@ -43,6 +43,7 @@ Player createPlayer();
 void generateHazards();
 void Death(DeathType type);
 void displayExits();
+void shoot();
 //adjacent room has hazard?
 
 //utility function to return the room (int) in direction (char NESW)

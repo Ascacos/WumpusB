@@ -18,6 +18,7 @@ using namespace std;
 class Location {
 private:
 	//attributes
+	int locID;
 	string locDesc;
 	string locName;
 	string locExits;
@@ -27,8 +28,8 @@ private:
 public:
 	//constructors
 	Location();
-
 	Location(string name, string desc, string exits);
+	Location(string name, string desc, string exits, int id);
 	//Location(string name, string desc, string exits, Hazard hazard)
 	~Location();
 
@@ -38,12 +39,14 @@ public:
 	string getExits();
 	Hazard* getHazard();
 	bool hasHazard();
+	int getID();
 
 	//mutators
 	void setDescription(string desc);
 	void setName(string name);
 	void setExits(string exits);
 	void putHazard(Hazard* hazard);
+	void killHazard();
 	//methods
 	string getLocationDetails();
 	vector<string> getExitsVector();

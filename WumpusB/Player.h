@@ -39,6 +39,7 @@ public:
 	void setStamina(int stamina);
 	void setName(string name);
 	void setLocation(Location loc);
+	void setArrows(int amount);
 
 	//methods
 	int getStamina();

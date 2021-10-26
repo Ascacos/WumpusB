@@ -109,7 +109,7 @@ void createLocations() {
 	//combine name, description, exits into vector<Location> map using location constructor
 	//this relies on all files having identical line counts
 	for (int i = 0; i < locationNames.size(); i++) {
-		Location loc = Location(locationNames[i], locationDescriptions[i], locationExits[i]);
+		Location loc = Location(locationNames[i], locationDescriptions[i], locationExits[i], i);
 		map.push_back(loc);
 	}
 }
@@ -299,11 +299,10 @@ void evaluateChoice(char choice, vector<string> exits) {
 	case 'i':
 		displayInfo();
 		return;
-	case 'G':
-	case 'g':
-		cout << "Shoot" << endl;
+	case 'A':
+	case 'a':
+		shoot();
 		return;
-
 	default:
 		cout << "Something went wrong...\n";
 		return;
@@ -316,6 +315,23 @@ void evaluateChoice(char choice, vector<string> exits) {
 	}
 	player.setLocation(loc);
 	player.setStamina(player.getStamina() - 1);
+}
+void shoot() {
+	cout << "Shoot" << endl;
+
+	char direction = utils.askForChar("What direction will you shoot your arrow?: ");
+	Location target = getRoom(direction, player.getLoc().getExitsVector(), player.getLoc());
+
+	if (target.hasHazard()) {
+		cout << "Shooting in room: " << target.getName() << endl;
+		cout << "Hazard: " << target.getHazard()->getName() << endl;
+		map[target.getID()].killHazard();
+		system("pause");
+	}
+	else {
+		cout << "You wasted an arrow!" << endl;
+	}
+	player.setArrows(player.getArrows() - 1);
 }
 
 // This function displays the 'stats' of the player
