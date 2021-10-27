@@ -1,0 +1,127 @@
+Saved file:
+Location:
+0
+The Dragon's Lair
+This first opening has seen a lot of traffic.
+S5;E2;W1
+-1
+Location:
+1
+The Ethereal Den
+The walls sound... alive...
+N0;E6;S3
+2
+Location:
+2
+The Scarlet Subterrain
+You notice bright red gemstones, etched into the rock.
+N0;W7;S4
+-1
+Location:
+3
+The Beholding Chasms
+Your footsteps echo into the gaping darkness.
+N8;W1;E4 
+-1
+Location:
+4
+Rosedover Hideout
+This place looks welcoming! How suspicious...
+N9;W3;E2
+-1
+Location:
+5
+The Sly Chasms
+You feel there is something odd about this cave.
+N0;W10;E11
+-1
+Location:
+6
+The Narrow Hollows
+You squeeze through tight gaps in the rocks.
+W1;N10;S12
+2
+Location:
+7
+The Climbing Abyss
+Uphill? In a cave? How peculiar.
+E2;N11;S13
+-1
+Location:
+8
+Brookvern Sanctuary
+In the corner, you spot the decrepit remains of an ancient scholar.
+N12;E14;S3
+-1
+Location:
+9
+The Unstable Hollows
+The deep groaning of shifting rock around you, thrums in your chest.
+N13;S4;W14
+-1
+Location:
+10
+The Treacherous Cavity
+Through the darkness, you can hear the trickle of water dripping down the slimy walls.
+W6;N5;E15
+-1
+Location:
+11
+The Rough Cave
+You stumble in the room and scrape your palms on the rough walls.
+N5;W16;E7
+-1
+Location:
+12
+The Darkest Hole
+You stare into the void and hope it doesn't stare into you. A whisper emerges from the depth. It's your own voice.
+W6;E17;S8
+-1
+Location:
+13
+The Northern Caves
+A small hole in the rock above you reveals the dark night sky above - the northern star shines faintly.
+N18;E7;S9
+-1
+Location:
+14
+The Hopeless Hole
+Don't look! Close your mouth! Cover your ears! The cave will steal your hope!
+N19;W8;E9
+-1
+Location:
+15
+The Hot Chasms
+The hot air in this cave singes your throat and makes you cough.
+W10;E16;S17
+-1
+Location:
+16
+Lush Shelter
+Your feet sink into the soft moss gathering in soft pillows; you become sleepy.
+W15;E11;S18
+-1
+Location:
+17
+The Black Overhang
+You run into the cave and have to grip onto the stone ledge as your feet give way and you almost fall into the abyss.
+N15;W12;S19
+-1
+Location:
+18
+Soundless Hollows
+You walk slowly into the profound darkness and fear makes you scream but no sound comes out.
+N16;E13;S19
+0
+Location:
+19
+Treasure Chambers
+You walk in and fall into an open chest. The clinking of gold coins rings loud in your ear.
+W17;E18;S14
+-1
+Player:
+asc
+500
+92
+8
+16

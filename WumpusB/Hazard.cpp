@@ -10,6 +10,10 @@ string Hazard::getName() {
 	return name;
 }
 
+HazardType Hazard::getType() {
+	return type;
+}
+
 void Hazard::doAttack() {
 	cout << "Hazard base" << endl;
 }

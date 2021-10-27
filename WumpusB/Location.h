@@ -31,6 +31,8 @@ public:
 	Location(string name, string desc, string exits);
 	Location(string name, string desc, string exits, int id);
 	//Location(string name, string desc, string exits, Hazard hazard)
+	Location(string name, string desc, string exits, int id, Hazard* hazard);
+
 	~Location();
 
 	//accessors

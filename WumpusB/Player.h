@@ -16,6 +16,7 @@ using namespace std;
 
 class Player {
 private:
+	int score;
 	bool alive;
 	int stamina;
 	int coins;
@@ -27,10 +28,15 @@ public:
 	//constructors
 	Player();
 	Player(string name);
-	Player(string name, Location loc);
+	Player(string name, int stamina, int arrows);
+	Player(string name, int stamina, int arrows, Location loc);
 	~Player();
 
 	//accessors
+	int getStamina();
+	int getArrows();
+	int getCoins();
+	int getScore();
 	string getName();
 	Location getLoc();
 	bool isAlive();
@@ -40,11 +46,12 @@ public:
 	void setName(string name);
 	void setLocation(Location loc);
 	void setArrows(int amount);
+	void setScore(int amount);
+	void addScore(int amount);
 
 	//methods
-	int getStamina();
-	int getArrows();
-	int getCoins();
+
+	
 	string getPlayerDetails();
 	void die();
 

@@ -6,14 +6,8 @@
 **************************************************/
 #ifndef GAME_H
 #define GAME_H
-#include <iostream>
-#include <string>
-#include <ctime>
-#include <fstream>
-#include <vector>
-#include <stdlib.h>
 
-#include <windows.h>
+#include <ctime>
 
 using namespace std;
 
@@ -25,35 +19,43 @@ using namespace std;
 #include "Abyss.h"
 #include "Util.h"
 #include "Enums.h"
+
 // Utility functions
 Util utils = Util();
 
-// 'print' functions
 void displayTitle();
 void displayInfo();
 void displayMap();
 void displayLocation();
+void displayIntro();
 
-// Core functions
 void setup();
 void playGame();
-void evaluateChoice(char choice, vector<string> exits);
+void evaluateChoice(string choice, vector<string> exits);
 void createLocations();
 Player createPlayer();
 void generateHazards();
 void Death(DeathType type);
 void displayExits();
+void displayStats();
+void mainMenu();
+void selectDifficulty();
 void shoot();
-//adjacent room has hazard?
+void save();
+void load();
+void checkHighscore(int score);
+string getDifficulty();
 
 //utility function to return the room (int) in direction (char NESW)
 Location getRoom(char direction, vector<string> exits, Location currentLocation);
 vector<Location> getNeighbours(Location loc);
 
-
 // Global variables
+bool loaded = false;
 bool quit = false;
 bool debug = false;
+Difficulty difficulty;
+bool dragonAlive;
 Player player;
 vector<Location> map;
 

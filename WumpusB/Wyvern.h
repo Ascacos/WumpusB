@@ -13,7 +13,9 @@ public:
 
 	virtual void doAttack(Player player, vector<Location> map);
 	void hint();
+	int getNumWyverns();
 private:
+	static int numWyverns;
 
 };
 

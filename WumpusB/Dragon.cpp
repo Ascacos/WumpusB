@@ -2,13 +2,13 @@
 
 Dragon::Dragon() {
 	name = "Dragon";
+	type = HazardType::DRAGON;
+	canMove = true;
 }
 Dragon::~Dragon() {}
 
 void Dragon::doAttack() {
-
-	//check destination room for additional hazard
-	cout << "Dragon attack" << endl;
+	cout << "\tYou wandered into the Dragon's den, and got gobbled up!" << endl;
 }
 
 void Dragon::hint()

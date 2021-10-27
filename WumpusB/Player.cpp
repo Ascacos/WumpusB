@@ -12,11 +12,29 @@ Player::Player() {
 	playerName = "";
 }
 Player::Player(string name) {
+	score = 0;
 	alive = true;
 	coins = 0;
 	arrows = 5;
 	stamina = 20;
 	playerName = name;
+}
+Player::Player(string name, int stam, int arr) {
+	score = 0;
+	alive = true;
+	coins = 0;
+	arrows = arr;
+	stamina = stam;
+	playerName = name;
+}
+Player::Player(string name, int stam, int arr, Location loc) {
+	score = 0;
+	alive = true;
+	coins = 0;
+	arrows = arr;
+	stamina = stam;
+	playerName = name;
+	playerLoc = loc;
 }
 /*
 Player::Player(string name, Location loc) {
@@ -43,6 +61,10 @@ void Player::setName(string name) { playerName = name; }
 void Player::setLocation(Location loc) { playerLoc = loc; }
 
 void Player::setArrows(int amount) { arrows = amount; }
+
+void Player::setScore(int amount) { score = amount; }
+
+void Player::addScore(int amount) { score += amount; }
 
 int Player::getStamina() { return stamina; }
 int Player::getArrows() { return arrows; }
@@ -71,3 +93,5 @@ bool Player::isAlive() {
 int Player::getCoins() {
 	return coins;
 }
+
+int Player::getScore() { return score; }

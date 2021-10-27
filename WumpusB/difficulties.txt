@@ -1,0 +1,14 @@
+				Difficulties
+
+	Easy 			Medium:			Hard
+	===========		==========		==========
+	Wyverns: 2		Wyverns: 3		Wyverns: 5
+	Abyss: 	2		Abyss: 3		Abyss: 3
+	
+	Stamina: 100		Stamina: 50		Stamina: 20
+	Arrows: 10		Arrows: 5		Arrows: 3
+		
+				
+				[1] Easy
+				[2] Medium
+				[3] Hard

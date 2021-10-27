@@ -1,4 +1,4 @@
-1. The Mighty Cave; ;N E S
+1. The Mighty Cave;N E S
 2. The Ethereal Den;S E W
 3. The Scarlet Subterrain; W E S
 4. The Beholding Chasms; 

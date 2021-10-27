@@ -1,0 +1,4 @@
+				Main Menu
+			[1] Play Game
+			[2] Load Game
+			[3] Change Difficulty

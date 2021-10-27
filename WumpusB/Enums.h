@@ -7,12 +7,24 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
-enum DeathType {
+enum class DeathType {
 	ABYSS,
 	WYVERN,
 	DRAGON,
 	STAMINA,
 	ARROWS
+};
+
+enum class HazardType {
+	DRAGON,
+	WYVERN,
+	ABYSS
+};
+
+enum class Difficulty {
+	EASY,
+	MEDIUM,
+	HARD
 };
 
 #endif

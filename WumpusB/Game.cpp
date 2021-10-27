@@ -11,22 +11,14 @@ int main() {
 	//seed randoms
 	srand((unsigned int)time(NULL));
 
+	mainMenu();
 	//display initial title
-	displayTitle();
-
-	//main menu
 
 	//show about info & how to play
-	utils.dumpFile("about.txt");
-	system("pause");
-	system("cls");
+	if (!loaded) displayIntro();
+
 	//get initial setup
-
-	setup();
-
-
-	//test player
-	//test();
+	if (!loaded) setup();
 
 	//do main game loop
 	playGame();
@@ -34,16 +26,54 @@ int main() {
 	//wait before exitting
 	system("pause");
 }
+void mainMenu() {
+	displayTitle();
+	utils.dumpFile("menu.txt");
 
+	int choice = utils.askForNumber("What would you like to do?: ", 0);
+	switch (choice) {
+	case 1:
+		break;
+	case 2:
+		load();
+		system("pause");
+		break;
+	case 3:
+		selectDifficulty();
+		break;
+	}
+	
+	system("cls");
+}
+void selectDifficulty() {
+	utils.dumpFile("difficulties.txt");
+	
+	int choice = utils.askForNumber("Select a difficulty: ", 0);
+	switch (choice) {
+	case 1:
+		difficulty = Difficulty::EASY;
+		cout << "\tDifficult set to easy." << endl;
+		break;
+	case 2:
+		difficulty = Difficulty::MEDIUM;
+		cout << "\tDifficult set to medium." << endl;
+		break;
+	case 3:
+		difficulty = Difficulty::HARD;
+		cout << "\tDifficult set to hard." << endl;
+		break;
+	default:
+		cout << "Something went wrong..." << endl;
+	}
+	system("pause");
+	system("cls");
+	mainMenu();
+}
 void setup() {
 	displayTitle();
 
-	cout << "\tFirst, please tell me your name!\n";
-
 	//create player & ask for name
-
-	player = createPlayer();
-	cout << "\tHi " << player.getName() << "! Good luck on your quest." << endl;
+	if (!loaded) player = createPlayer();
 
 	//generate location vectors from file
 	createLocations();
@@ -53,6 +83,7 @@ void setup() {
 
 	//generate hazards
 	generateHazards();
+
 	system("pause");
 	//get more info from the user here
 	// e.g. load saved game?
@@ -117,10 +148,28 @@ void createLocations() {
 // Function to create Player object, initialised with 
 // a name given by the user
 Player createPlayer() {
-	cout << "\t";
-	string name = utils.askForString("Enter your name: ");
-	Player player = Player(name);
+	cout << "\tFirst, please tell me your name!\n";
+
+	cout.clear();
+	cin.clear();
+	string name = utils.askForString("\tEnter your name: ");
+	Player player;
+	switch (difficulty) {
+	case Difficulty::EASY:
+		player = Player(name, 100, 10);
+		break;
+	case Difficulty::MEDIUM:
+		player = Player(name, 50, 5);
+		break;
+	case Difficulty::HARD:
+		player = Player(name, 20, 3);
+		break;
+	default:
+		player = Player(name, 100, 10);
+		break;
+	}
 	if (utils.tolower(name) == "tutor") { debug = true; }
+	cout << "\tHi " << player.getName() << "! Good luck on your quest." << endl;
 	return player;
 }
 
@@ -131,23 +180,29 @@ void displayTitle() {
 	cout << "--------------------------------------------------------------------------------\n";
 }
 
+void displayIntro() {
+	displayTitle();
+	utils.dumpFile("about.txt");
+	utils.dumpFile("currencies.txt");
+	system("pause");
+	system("cls");
+}
 // A simple function to print the game menu, as part of the user interface
 void displayMenu() {
 	displayTitle();
 	cout << "\tStamina: " << player.getStamina()
 		<< "\t\tArrows: " << player.getArrows()
-		<< "\t\tCoins: " << player.getCoins() << endl;
+		<< "\t\tCoins: " << player.getCoins()
+		<< endl
+		<< "\tDifficulty: " << getDifficulty()
+		<< "\t\tScore: " << player.getScore() << endl;
+		
 	utils.dumpFile("compass.txt");
 	cout << "--------------------------------------------------------------------------------\n";
 }
 
 // The core game loop
 void playGame() {
-	// initialise hazard pointers
-	// putting them here ensures I can delete them after the core do-while loop
-	Dragon* dragon = nullptr;
-	Wyvern* wyvern = nullptr;
-	Abyss* abyss = nullptr;
 	do {
 		displayMenu();
 		displayLocation();
@@ -155,86 +210,96 @@ void playGame() {
 		//check if room is hazard
 		Location loc = player.getLoc();
 		if (loc.hasHazard()) {
-			if (loc.getHazard()->getName() == "Dragon")
-			{
-				Dragon* dragon = dynamic_cast<Dragon*>(loc.getHazard());
-
-				dragon->doAttack();
-				Death(DRAGON);
+			//check what hazard is in the room
+			if (loc.getHazard()->getType() == HazardType::DRAGON) {
+				Death(DeathType::DRAGON);
 			}
-			if (loc.getHazard()->getName() == "Wyvern")
-			{
-				//system("cls");
-				//displayMenu();
-
-				cout << "\tYou encounter a Wyvern, and have been dropped in a random room." << endl;
-
-				Wyvern* wyvern = dynamic_cast<Wyvern*>(loc.getHazard());
+			if (loc.getHazard()->getType() == HazardType::WYVERN) {
+				Wyvern* wyvern = dynamic_cast<Wyvern*>(player.getLoc().getHazard());
 				wyvern->doAttack(player, map);
 				int location = rand() % map.size();
 				player.setLocation(map[location]);
-
 				system("pause");
 				system("cls");
-
-				playGame();
+				displayMenu();
+				displayLocation();
 			}
-			if (loc.getHazard()->getName() == "Abyss") {
-				Death(ABYSS);
+			if (loc.getHazard()->getType() == HazardType::ABYSS) {
+				Death(DeathType::ABYSS);
 			}
 		}
 
 		if (player.getStamina() <= 0) {
-			Death(STAMINA);
+			Death(DeathType::STAMINA);
 		}
 		if (player.getArrows() <= 0) {
-			Death(ARROWS);
+			Death(DeathType::ARROWS);
 		}
-
 		if (player.isAlive()) {
-			char userChoice;
-			userChoice = utils.askForChar("Enter an option: ");
+			string userChoice;
+			userChoice = utils.askForString("Enter an option: ");
 			vector<string> exits = player.getLoc().getExitsVector();
 			evaluateChoice(userChoice, exits);
 		}
-
 		system("cls");
 
+		if (!dragonAlive) {
+			displayTitle();
+			cout << "\tYou killed the dragon!" << endl;
+			displayStats();
+			return;
+		}	
 	} while (!quit && player.isAlive());
 
-	// GameOver();
-
-	system("cls");
-	displayMenu();
-
-	cout << "Game over!" << endl;
+	displayTitle();
+	cout << "\tThank you for playing!" << endl;
+	
+	return;
 }
 
 void Death(DeathType type) {
+	Dragon* dragon = nullptr;
+	Wyvern* wyvern = nullptr;
+	Abyss* abyss = nullptr;
+	system("cls");
+	displayTitle();
+	//displayMenu();
 	switch (type) {
-	case ABYSS: 
-		cout << "Death by abyss" << endl;
+	case DeathType::ABYSS: 
+		abyss = dynamic_cast<Abyss*>(player.getLoc().getHazard());
+		abyss->doAttack();
 		break;
-	case WYVERN: 
-		cout << "Death by wyvern" << endl;
+	case DeathType::DRAGON:
+		dragon = dynamic_cast<Dragon*>(player.getLoc().getHazard());
+		dragon->doAttack();
 		break;
-	case DRAGON:
-		cout << "Death by dragon" << endl;
-		break;
-	case STAMINA:
+	case DeathType::STAMINA:
 		cout << "You ran out of stamina and died." << endl;
 		break;
-	case ARROWS: 
-		cout << "You ran out of arrows and will be unable to win!" << endl;
+	case DeathType::ARROWS:
+		cout << "You ran out of arrows and will be unable to win!\n\tYou'll have to start over..." << endl;
 		break;
 	default:
-		cout << "Somethin went wrong..." << endl;
+		cout << "\tYou died!" << endl;
 		break;
 	}
+	displayStats();
 	system("pause");
-	displayMenu();
-	cout << "ABYSS!!" << endl;
 	player.die();
+}
+
+void displayStats() {
+	cout << "\tYou got " << player.getScore() << " while exploring the caves." << endl;
+	int staminaPoints = player.getStamina() * 10;	//10pts per stamina left
+	int arrowPoints = player.getArrows() * 100;		//100pts per arrow left
+	cout << "\tAdding " << staminaPoints << " for leftover stamina." << endl;
+	cout << "\tAdding " << arrowPoints << " for leftover arrows." << endl;
+	player.addScore(staminaPoints);				
+	player.addScore(arrowPoints);				
+
+	cout << "\n\tYour final score was: " << player.getScore() << endl;
+
+	checkHighscore(player.getScore());
 }
 // Displays a formatted version of the player's current location
 void displayLocation() {
@@ -252,7 +317,7 @@ void displayLocation() {
 		if (neighbours[i].hasHazard()) {
 			Hazard* haz = neighbours[i].getHazard();
 			haz->hint();
-			if (debug) cout << haz->getName() << " in " << neighbours[i].getName() << endl;
+			if (debug) cout << "--" <<  haz->getName() << " in " << neighbours[i].getName() << endl;
 		}
 	}
 
@@ -267,70 +332,222 @@ void displayExits() {
 }
 
 // This function will evalutate the user's input
-void evaluateChoice(char choice, vector<string> exits) {
-	choice = tolower(choice);
-	switch (choice) {
-	case 'N':
-	case 'n':
-		cout << "\tYou move North.\n";
-		break;
-	case 'S':
-	case 's':
-		cout << "\tYou move South.\n";
-		break;
-	case 'W':
-	case 'w':
-		cout << "\tYou move West.\n";
-		break;
-	case 'E':
-	case 'e':
-		cout << "\tYou move East.\n";
-		break;
-	case 'Q':
-	case 'q':
-		//cout << "You choose Quit.\n";
-		quit = true;
-		return;
-	case 'M':
-	case 'm':
-		displayMap();
-		return;
-	case 'I':
-	case 'i':
-		displayInfo();
-		return;
-	case 'A':
-	case 'a':
-		shoot();
-		return;
-	default:
-		cout << "Something went wrong...\n";
-		return;
-	}
-	Location loc = getRoom(choice, exits, player.getLoc());
-	if (loc.getName() == player.getLoc().getName()) {
-		cout << "\n\tBut there's nothing there... Try again!\n" << endl;
-		system("pause");
-		return;
-	}
-	player.setLocation(loc);
-	player.setStamina(player.getStamina() - 1);
-}
-void shoot() {
-	cout << "Shoot" << endl;
+void evaluateChoice(string input, vector<string> exits) {
 
+	if (input.size() == 1) {
+		char choice;
+		choice = tolower(input[0]);
+		switch (choice) {
+		case 'n':
+			cout << "\tYou move North.\n";
+			break;
+		case 's':
+			cout << "\tYou move South.\n";
+			break;
+		case 'w':
+			cout << "\tYou move West.\n";
+			break;
+		case 'e':
+			cout << "\tYou move East.\n";
+			break;
+		case 'q':
+			//cout << "You choose Quit.\n";
+			quit = true;
+			return;
+		case 'm':
+			displayMap();
+			return;
+		case 'i':
+			displayInfo();
+			return;
+		default:
+			cout << "Something went wrong...\n";
+			return;
+		}
+		Location loc = getRoom(choice, exits, player.getLoc());
+		if (loc.getName() == player.getLoc().getName()) {
+			cout << "\n\tBut there's nothing there... Try again!\n" << endl;
+			system("pause");
+			return;
+		}
+		player.setLocation(loc);
+		player.setStamina(player.getStamina() - 1);
+		return;
+	}
+	else {
+		input = utils.tolower(input);
+		if (input == "shoot") {
+			shoot();
+			return;
+		}
+		if (input == "save") {
+			
+			save();
+			
+			system("pause");
+		}
+	}
+}
+
+void save() {
+	ofstream file("save.txt");
+	if (file.is_open()) {
+
+		//save map
+		file << "Saved file:" << endl;
+		for (int i = 0; i < map.size(); i++) {
+			file << "Location:" << endl;
+			file << map[i].getID() << endl;
+			file << map[i].getName() << endl;
+			file << map[i].getDescription() << endl;
+			file << map[i].getExits() << endl;
+			if (map[i].hasHazard()) {
+				Hazard* haz = map[i].getHazard();
+				file << (int)haz->getType() << endl;
+			}
+			else {
+				file << -1 << endl;
+			}
+
+		}
+		//save player saving here
+		file << "Player:" << endl;
+		file << player.getName() << endl;
+		file << player.getScore() << endl;
+		file << player.getStamina() << endl;
+		file << player.getArrows() << endl;
+		file << player.getLoc().getID() << endl;
+	}
+	else {
+		cout << "File not found.\n\n";
+	}
+
+	file.close();
+	cout << "\tGame has been saved. " << endl << endl;
+
+}
+
+void load() {
+
+	// open file for reading
+	ifstream file("save.txt");
+	map.clear();
+	if (file.is_open()) {
+		string line;
+		getline(file, line);
+	
+		while (!file.eof()) {
+			getline(file, line);
+			if (line == "Location:") {
+				int id;
+				string name;
+				string desc;
+				string exits;
+
+				cout << "\n\nLOCATION!!!" << endl;
+
+				getline(file, line);
+				cout << "Found id: " << line << endl;
+				id = stoi(line);
+				getline(file, line);
+				cout << "Found name: " << line << endl;
+				name = line;
+				getline(file, line);
+				cout << "Found desc: " << line << endl;
+				desc = line;
+				getline(file, line);
+				cout << "Found exits: " << line << endl;
+				exits = line;
+				getline(file, line);
+
+				cout << "Hazard: " << line << endl;
+
+				switch (stoi(line)) {
+				case -1:
+					map.push_back(Location(name, desc, exits, id));
+					break;
+				case 0:
+					map.push_back(Location(name, desc, exits, id, new Dragon()));
+					dragonAlive = true;
+					break;
+				case 1:
+					map.push_back(Location(name, desc, exits, id, new Wyvern()));
+					break;
+				case 2:
+					map.push_back(Location(name, desc, exits, id, new Abyss()));
+					break;
+				default:
+					break;
+				}
+				cout << "Map size: " << map.size() << endl;
+
+
+			}
+
+			if (line == "Player:"){
+				cout << "Found playerdata" << endl;
+				getline(file, line);
+				player = Player(line);
+				getline(file, line);
+				player.setScore(stoi(line));
+				getline(file, line);
+				player.setStamina(stoi(line));
+				getline(file, line);
+				player.setArrows(stoi(line));
+				getline(file, line);
+				player.setLocation(map[stoi(line)]);
+			}
+			//cout << " Last line for loc: " << line << endl;
+
+		}
+
+	}
+	else {
+		cout << "\n Save file not found.\n";
+	}
+	// remember to close the file
+	file.close();
+
+	loaded = true;
+}
+
+void shoot() {
 	char direction = utils.askForChar("What direction will you shoot your arrow?: ");
 	Location target = getRoom(direction, player.getLoc().getExitsVector(), player.getLoc());
 
 	if (target.hasHazard()) {
-		cout << "Shooting in room: " << target.getName() << endl;
-		cout << "Hazard: " << target.getHazard()->getName() << endl;
-		map[target.getID()].killHazard();
-		system("pause");
+
+		if (debug) cout << "--Shooting in room: " << target.getID() << " " << target.getName() << endl;
+		if (debug) cout << "--Hazard: " << target.getHazard()->getName() << endl;
+
+		Hazard* hazard = target.getHazard();
+		switch (hazard->getType()) {
+		case HazardType::DRAGON:
+			//TODO: random chance to miss.
+			map[target.getID()].killHazard();
+			player.addScore(1000);
+			dragonAlive = false;
+			break;
+		case HazardType::WYVERN:
+			cout << "You fire your arrow into a Wyvern colony!" << endl;
+			cout << "They didn't like it very much, and have dispersed " << endl;
+			cout << "further into the adjacent corridors, leaving the cave empty." << endl;
+			map[target.getID()].killHazard();
+			player.addScore(250);
+			break;
+		case HazardType::ABYSS:
+			cout << "You hear your arrow echo into the abyss." << endl;
+			break;
+		default:
+			cout << "Something went wrong..." << endl;
+			break;
+		}
+
 	}
 	else {
 		cout << "You wasted an arrow!" << endl;
 	}
+	system("pause");
 	player.setArrows(player.getArrows() - 1);
 }
 
@@ -358,36 +575,56 @@ void displayMap() {
 	displayMenu();
 }
 
-
-
-
 void generateHazards() {
 	//generate Dragon first
 	int Dragonloc = rand() % 5 + 15;
 
 	//if the location already has a hazard, return (should never happen is this is generated first)
 	if (map[Dragonloc].hasHazard()) {
+		cout << "ERROR PLACING DRAGON!! Please restart your game." << endl;
+		system("pause");
 		return;
 	}
-	else map[Dragonloc].putHazard(new Dragon());
+	else {
+		map[Dragonloc].putHazard(new Dragon());
+		dragonAlive = true;
+	}
 
-	if (debug) cout << "Dragon at: " << map[Dragonloc].getName() << endl;
+	if (debug) cout << "--Dragon at: " << map[Dragonloc].getName() << endl;
 
 
 	//specify the max number of wyverns & abyss
-	int maxWyverns = 2;
-	int maxAbyss = 2;
-
+	int maxWyvern;
+	int maxAbyss;
+	switch (difficulty) {
+	case Difficulty::EASY:
+		maxWyvern = 2;
+		maxAbyss = 2;
+		break;
+	case Difficulty::MEDIUM:
+		maxWyvern = 3;
+		maxAbyss = 3;
+		break;
+	case Difficulty::HARD:
+		maxWyvern = 5;
+		maxAbyss = 3;
+		break;
+	default:
+		//default to easy
+		maxWyvern = 2;
+		maxAbyss = 2;
+		break;
+	}
 	//counters
 	int numWyverns = 0;
 	int numAbyss = 0;
 
-	while (numWyverns < maxWyverns) {
+	while (numWyverns < maxWyvern) {
 		int loc = rand() % 20;
 		if (map[loc].hasHazard()) { continue; }
 		else {
 			(map[loc].putHazard(new Wyvern()));
-			if (debug) cout << "Wyvern at: " << map[loc].getName() << endl;
+			if (debug) cout << "--Wyvern at: " << map[loc].getName() << endl;
 			numWyverns++;
 		}
 
@@ -397,11 +634,10 @@ void generateHazards() {
 		if (map[loc].hasHazard()) { continue; }
 		else {
 			(map[loc].putHazard(new Abyss()));
-			if (debug) cout << "Abyss at: " << map[loc].getName() << endl;
+			if (debug) cout << "--Abyss at: " << map[loc].getName() << endl;
 			numAbyss++;
 		}
 	}
-
 }
 
 Location getRoom(char direction, vector<string> exits, Location currentLocation) {
@@ -427,4 +663,24 @@ vector<Location> getNeighbours(Location loc) {
 		neighbours.push_back(map[stoi(slice)]);
 	}
 	return neighbours;
+}
+
+void checkHighscore(int score) {
+	int current = utils.getIntFromFile("highscore.txt");
+	if (score > current) {
+		utils.saveIntToFile(score, "highscore.txt");
+	}
+}
+
+string getDifficulty() {
+	switch (difficulty) {
+	case Difficulty::EASY:
+		return "Easy";
+	case Difficulty::MEDIUM:
+		return "Medium";
+	case Difficulty::HARD:
+		return "Hard";
+	default:
+		return "Easy";
+	}
 }

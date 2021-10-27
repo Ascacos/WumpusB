@@ -31,6 +31,15 @@ Location::Location(string name, string desc, string exits, int id) {
 	hazard = nullptr;
 	containsHazard = false;
 }
+
+Location::Location(string name, string desc, string exits, int id, Hazard* haz) {
+	locID = id;
+	locName = name;
+	locDesc = desc;
+	locExits = exits;
+	hazard = haz;
+	containsHazard = true;
+}
 Location::~Location() { }
 
 //accessors
@@ -44,9 +53,9 @@ int Location::getID() { return locID; }
 void Location::setDescription(string desc) { locDesc = desc; }
 void Location::setName(string name) { locName = name; }
 void Location::setExits(string exits) { locExits = exits; }
-void Location::putHazard(Hazard* _hazard) {
+void Location::putHazard(Hazard* haz) {
 	containsHazard = true;
-	hazard = _hazard;
+	hazard = haz;
 }
 
 void Location::killHazard() {
@@ -59,6 +68,7 @@ void Location::killHazard() {
 	else {
 		cout << "There's no hazard here..." << endl;
 	}
+
 
 }
 //methods
