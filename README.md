@@ -1,10 +1,6 @@
 
 	Dragon Hunter
 
-Anthony Passarin
-<student id>
-apas0022@student.monash.edu
-
 Assignment 3 for FIT1048 - Intro to C++
 	
 Game controls:
