@@ -9,9 +9,8 @@ N/S/E/W to move in a direction.
 'shoot' - will prompt the user for a direction (make sure you press ENTER)
 'inventory' - will show the player's inventory
 
-===========================================
+
 	Extra Functionality
-===========================================
 
 [X]	Debug mode - 'tutor'
 	Mostly for ease of assessment for the assessor(s), you can enter 'debug' mode, by setting
