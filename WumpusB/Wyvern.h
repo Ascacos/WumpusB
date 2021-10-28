@@ -8,13 +8,18 @@
 class Wyvern : public Hazard {
 
 public:
+	//constructors
 	Wyvern();
 	~Wyvern();
 
-	virtual void doAttack(Player player, vector<Location> map);
-	void hint();
+	//accessors
 	int getNumWyverns();
+
+	//public methods
+	virtual void doAttack(Player& player, vector<Location>& map);
+	void hint();
 private:
+	//static counter for wyverns
 	static int numWyverns;
 
 };

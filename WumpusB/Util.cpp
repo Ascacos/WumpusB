@@ -1,8 +1,9 @@
 #include "Util.h"
 
+//constructor
 Util::Util() {}
 
-
+//Utility function to display the text from a file, to the player
 void Util::dumpFile(string fileName) {
 	ifstream fileToRead(fileName);
 
@@ -31,6 +32,7 @@ string Util::askForString(string prompt) {
 
 	return userInput;
 }
+
 // Utility function to ask the user for an integer input
 // includes prompt and min
 int Util::askForNumber(string prompt, int min) {
@@ -89,6 +91,7 @@ char Util::askForChar(string prompt, string options) {
 	return toupper(choice);
 }
 
+//Utility function to convert a string to lowercase
 string Util::tolower(string word) {
 	string lower;
 	for (char c : word) {
@@ -97,6 +100,7 @@ string Util::tolower(string word) {
 	return lower;
 }
 
+//Utility function to get an integer from file (used to load highscore)
 int Util::getIntFromFile(string filename) {
 	// open file for reading
 	ifstream file(filename);
@@ -119,6 +123,7 @@ int Util::getIntFromFile(string filename) {
 	}
 }
 
+//Utility function to save integer to file (used to save highscore)
 void Util::saveIntToFile(int value, string filename) {
 	ofstream file("highscore.txt");
 	if (file.is_open()) {
@@ -131,8 +136,8 @@ void Util::saveIntToFile(int value, string filename) {
 	file.close();
 }
 
-bool Util::isNumber(string str)
-{
+//Boolean function to check if a string can be safely case to an integer
+bool Util::isNumber(string str) {
 	for (char c : str) {
 		if (!isdigit(c)) return false;
 	}

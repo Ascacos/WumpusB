@@ -11,19 +11,11 @@ Purpose : Player class header file
 #include <sstream>
 
 #include "Location.h"
+#include "Item.h"
 
 using namespace std;
 
 class Player {
-private:
-	int score;
-	bool alive;
-	int stamina;
-	int coins;
-	int arrows;
-	string playerName;
-	Location playerLoc;
-
 public:
 	//constructors
 	Player();
@@ -40,6 +32,8 @@ public:
 	string getName();
 	Location getLoc();
 	bool isAlive();
+	bool hasItem(ItemType type);
+	int getItem(ItemType type);
 
 	//mutators
 	void setStamina(int stamina);
@@ -48,14 +42,22 @@ public:
 	void setArrows(int amount);
 	void setScore(int amount);
 	void addScore(int amount);
+	void addItem(Item* item);
+	void removeItem(int index);
 
 	//methods
-
-	
-	string getPlayerDetails();
+	string showInventory();
 	void die();
-
-
+private:
+	//attributes
+	int score;
+	bool alive;
+	int stamina;
+	int coins;
+	int arrows;
+	string playerName;
+	Location playerLoc;
+	vector<Item*> playerInventory;
 };
 
 #endif

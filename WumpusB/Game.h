@@ -19,8 +19,10 @@ using namespace std;
 #include "Abyss.h"
 #include "Util.h"
 #include "Enums.h"
+#include "Item.h"
 
-// Utility functions
+// Create a Util object, so we can use 
+// its utility functions
 Util utils = Util();
 
 void displayTitle();
@@ -45,19 +47,24 @@ void save();
 void load();
 void checkHighscore(int score);
 string getDifficulty();
-
+void movePlayer(Location loc);
+void moveDragon();
+void generateItems();
 //utility function to return the room (int) in direction (char NESW)
 Location getRoom(char direction, vector<string> exits, Location currentLocation);
 vector<Location> getNeighbours(Location loc);
+Item* randomItem();
 
 // Global variables
-bool loaded = false;
-bool quit = false;
-bool debug = false;
-Difficulty difficulty;
-bool dragonAlive;
-Player player;
-vector<Location> map;
 
-// to be implemented:
+
+bool loaded = false;	//represents if the game has been loaded from a save or not
+bool quit = false;		//if the player has quit
+bool debug = false;		//if debug mode enabled
+Difficulty difficulty;	//the game's difficulty
+bool dragonAlive;		//is the dragon alive
+Location dragonLoc;		//the location of the dragon
+Player player;			// the player
+vector<Location> map;	//a vector of locations, representing the game's map
+
 #endif

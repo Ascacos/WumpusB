@@ -9,8 +9,10 @@ using namespace std;
 
 class Util {
 public:
+	//constructor
 	Util();
 
+	//utility methods
 	void dumpFile(string fileName);
 	string askForString(string prompt);
 	int askForNumber(string prompt, int min);

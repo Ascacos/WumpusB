@@ -1,24 +1,15 @@
 #include "Hazard.h"
 
-Hazard::Hazard() {
-	name = "None";
-	canMove = false;
-}
+//constructors
+Hazard::Hazard() {}
 Hazard::~Hazard() {}
 
-string Hazard::getName() {
-	return name;
-}
+//accessors
+string Hazard::getName() { return name; }
+HazardType Hazard::getType() { return type; }
+//methods
 
-HazardType Hazard::getType() {
-	return type;
-}
+//blank doAttack(), to be inherited by derived classes
+void Hazard::doAttack(){}
 
-void Hazard::doAttack() {
-	cout << "Hazard base" << endl;
-}
-
-void Hazard::hint()
-{
-}
 

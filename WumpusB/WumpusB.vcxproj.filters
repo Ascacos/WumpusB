@@ -25,6 +25,9 @@
     <Filter Include="Util">
       <UniqueIdentifier>{8aea11ff-f622-4119-ad3e-d851eb5cb9e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{a73e1448-f9a2-4038-945c-b2c20b5037fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -50,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="Wyvern.cpp">
       <Filter>Hazard</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="Enums.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,14 +1,10 @@
-				    [N]
-				     |
-				[W]--+--[E]
-				     |
-				    [S]
+
 
 		Keybinds:			Commands:
 [N] Move North		[M] Map		[Save] to save game
 [S] Move South		[I] Info 	[Shoot] to shoot into an adjacent room
-[W] Move West		[Q] Quit	
-[E] Move East
+[W] Move West		[Q] Quit	[Inventory] view your items
+[E] Move East		
 		
 		
 	

@@ -7,6 +7,7 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
+//An enum to hold the possible death types
 enum class DeathType {
 	ABYSS,
 	WYVERN,
@@ -15,16 +16,24 @@ enum class DeathType {
 	ARROWS
 };
 
+//An enum to hold the possible hazard types
 enum class HazardType {
 	DRAGON,
 	WYVERN,
 	ABYSS
 };
 
+//An enum to hold the possible difficulties
 enum class Difficulty {
 	EASY,
 	MEDIUM,
 	HARD
+};
+
+//An enum to hold the possible item types
+enum class ItemType {
+	STAMINA_BAR,
+	ESCAPE_ROPE
 };
 
 #endif

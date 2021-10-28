@@ -13,6 +13,7 @@
 #include <vector>
 //#include "Dragon.h"
 #include "Hazard.h"
+#include "Item.h"
 using namespace std;
 
 class Location {
@@ -24,15 +25,15 @@ private:
 	string locExits;
 	Hazard* hazard;
 	bool containsHazard;
+	Item* item;
+	bool containsItem;
 
 public:
 	//constructors
 	Location();
 	Location(string name, string desc, string exits);
 	Location(string name, string desc, string exits, int id);
-	//Location(string name, string desc, string exits, Hazard hazard)
 	Location(string name, string desc, string exits, int id, Hazard* hazard);
-
 	~Location();
 
 	//accessors
@@ -42,17 +43,20 @@ public:
 	Hazard* getHazard();
 	bool hasHazard();
 	int getID();
+	bool hasItem();
+	Item* getItem();
 
 	//mutators
 	void setDescription(string desc);
 	void setName(string name);
 	void setExits(string exits);
 	void putHazard(Hazard* hazard);
+	void addItem(Item* item);
 	void killHazard();
-	//methods
-	string getLocationDetails();
-	vector<string> getExitsVector();
+	void removeItem();
 
+	//methods
+	vector<string> getExitsVector();
 };
 
 #endif

@@ -6,10 +6,12 @@
 class Dragon : public Hazard {
 
 public:
+	//constructors
 	Dragon();
 	~Dragon();
 
-	virtual void doAttack();
+	//public methods
+	virtual void doAttack(Player& player);
 	void hint();
 private:
 

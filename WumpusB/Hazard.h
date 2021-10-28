@@ -21,7 +21,6 @@ protected:
 	//attributes
 	HazardType type;
 	string name;
-	bool canMove;
 
 
 

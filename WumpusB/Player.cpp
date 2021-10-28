@@ -36,62 +36,69 @@ Player::Player(string name, int stam, int arr, Location loc) {
 	playerName = name;
 	playerLoc = loc;
 }
-/*
-Player::Player(string name, Location loc) {
-	alive = true;
-	coins = 0;
-	arrows = 5;
-	stamina = 20;
-	playerName = name;
-	playerLoc = loc;
-}*/
-
-Player::~Player() {
-
-}
+Player::~Player() {}
 
 //accessors
 string Player::getName() { return playerName; }
 Location Player::getLoc() { return playerLoc; }
-
-void Player::setStamina(int amount) { stamina = amount; }
+int Player::getStamina() { return stamina; }
+int Player::getArrows() { return arrows; }
+int Player::getCoins() { return coins; }
+int Player::getScore() { return score; }
+bool Player::isAlive() { return alive; }
+bool Player::hasItem(ItemType type) {
+	for (int i = 0; i < playerInventory.size(); i++) {
+		if (playerInventory[i]->getType() == type) {
+			return true;
+		}
+	}
+	return false;
+}
+int Player::getItem(ItemType type) {
+	for (int i = 0; i < playerInventory.size(); i++) {
+		if (playerInventory[i]->getType() == type) {
+			return i;
+		}
+	}
+	return -1;
+}
 
 //mutators
 void Player::setName(string name) { playerName = name; }
 void Player::setLocation(Location loc) { playerLoc = loc; }
-
 void Player::setArrows(int amount) { arrows = amount; }
-
+void Player::setStamina(int amount) { stamina = amount; }
 void Player::setScore(int amount) { score = amount; }
-
 void Player::addScore(int amount) { score += amount; }
+void Player::addItem(Item* item) {
+	playerInventory.push_back(item);
+}
+void Player::removeItem(int index) {
+	delete playerInventory[index];
+	playerInventory[index] = nullptr;
+	playerInventory.erase(playerInventory.begin() + index);
+}
+void Player::die() { alive = false; }
 
-int Player::getStamina() { return stamina; }
-int Player::getArrows() { return arrows; }
 //methods
-string Player::getPlayerDetails() {
-	stringstream playerDetails;
-	playerDetails << "\tPlayer Profile:\n";
-	playerDetails << "\n Name: " << playerName;
-	playerDetails << "\n Location: " << playerLoc.getName();
+//display the player's inventory contents
+string Player::showInventory()
+{
+	stringstream inventoryDetails;
+	inventoryDetails << "\tYour inventory:\n";
+	for (int i = 0; i < playerInventory.size(); i++) {
+		inventoryDetails << i + 1 << ". " << playerInventory[i]->getName() << endl;
+	}
+	if (playerInventory.size() == 0) {
+		cout << "\t...is empty" << endl;
+	}
 
-	playerDetails << "\n";
+	inventoryDetails << "\n";
 
 	// add other details here
-	return playerDetails.str();
+	return inventoryDetails.str();
 }
 
-void Player::die()
-{
-	alive = false;
-}
 
-bool Player::isAlive() {
-	return alive;
-}
 
-int Player::getCoins() {
-	return coins;
-}
 
-int Player::getScore() { return score; }

@@ -143,6 +143,7 @@
     <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Hazard.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Util.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Hazard.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Util.h" />
